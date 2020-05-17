@@ -1,5 +1,5 @@
-# vue_shop1 （电商后台管理系统）
-## 用到的技术 ： vue vueRouter Element-UI axios 等
+# vue_shop1 ---（电商后台管理系统）
+## 用到的前端相关的技术 ： vue vueRouter Element-UI axios 等
 
 ## Project setup
 ```
