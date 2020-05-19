@@ -62,16 +62,10 @@
 		  title="添加角色"
 		  :visible.sync="addRoleDialogVisible"
 		  width="50%"
-<<<<<<< HEAD
-		  >
-		 <el-form ref="addRoleFormRef" :model="addRoleForm" label-width="80px">
-		   <el-form-item label="角色名称:">
-=======
 		  @close="addRoleClosed"
 		  >
 		 <el-form ref="addRoleFormRef" :model="addRoleForm" label-width="80px" :rules="addRoleFormRules">
-		   <el-form-item label="角色名称:" prop="roleName">
->>>>>>> rights
+		   <el-form-item label="角色名称:" prop="roleName" >
 		     <el-input v-model="addRoleForm.roleName"></el-input>
 		   </el-form-item>
 		   <el-form-item label="角色描述:">
@@ -89,13 +83,8 @@
 		  :visible.sync="editRoleDialogVisible"
 		  width="50%"
 		  >
-<<<<<<< HEAD
-		 <el-form ref="editRoleFormRef" :model="editRoleForm" label-width="80px">
-		   <el-form-item label="角色名称:">
-=======
 		 <el-form ref="editRoleFormRef" :model="editRoleForm" label-width="80px" :rules="editRoleFormRules">
 		   <el-form-item label="角色名称:" prop="roleName">
->>>>>>> rights
 		     <el-input v-model="editRoleForm.roleName"></el-input>
 		   </el-form-item>
 		   <el-form-item label="角色描述:">
