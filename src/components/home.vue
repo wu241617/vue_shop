@@ -9,7 +9,7 @@
 			<el-button @click="logout" type="info">退出</el-button>
 		</el-header>
 		<!-- 页面主题区域 -->
-		<el-container>
+		<el-container class="zhuti">
 			<!-- 侧边栏 -->
 			<el-aside :width="isCollapse ? '64px' : '200px'">
 				<div class="toggle-button" @click="toggleCollapse">|||</div>
@@ -105,8 +105,10 @@
 		align-items: center;
 		color: #fff;
 		font-size: 20px;
+		height:10% !important;
+		width:100%;
 
-		>div {
+		> div {
 			display: flex;
 			align-items: center;
 
@@ -115,9 +117,14 @@
 			}
 		}
 	}
-
+     
+	 .zhuti{
+		 height:90%;
+	 }
+	 
 	.el-aside {
 		background-color: #333744;
+		height:100% !important;
 		.el-menu{
 			border-right:none;
 		}
@@ -125,6 +132,7 @@
 
 	.el-main {
 		background-color: #eaedf1;
+		height:100% !important;
 	}
 	.iconfont{
 		margin-right:10px;
