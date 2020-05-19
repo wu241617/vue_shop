@@ -62,9 +62,10 @@
 		  title="添加角色"
 		  :visible.sync="addRoleDialogVisible"
 		  width="50%"
+		  @close="addRoleClosed"
 		  >
-		 <el-form ref="addRoleFormRef" :model="addRoleForm" label-width="80px">
-		   <el-form-item label="角色名称:">
+		 <el-form ref="addRoleFormRef" :model="addRoleForm" label-width="80px" :rules="addRoleFormRules">
+		   <el-form-item label="角色名称:" prop="roleName">
 		     <el-input v-model="addRoleForm.roleName"></el-input>
 		   </el-form-item>
 		   <el-form-item label="角色描述:">
@@ -82,8 +83,8 @@
 		  :visible.sync="editRoleDialogVisible"
 		  width="50%"
 		  >
-		 <el-form ref="editRoleFormRef" :model="editRoleForm" label-width="80px">
-		   <el-form-item label="角色名称:">
+		 <el-form ref="editRoleFormRef" :model="editRoleForm" label-width="80px" :rules="editRoleFormRules">
+		   <el-form-item label="角色名称:" prop="roleName">
 		     <el-input v-model="editRoleForm.roleName"></el-input>
 		   </el-form-item>
 		   <el-form-item label="角色描述:">
@@ -139,10 +140,22 @@
 					roleName:'',
 					roleDesc:''
 				},
+				//添加角色表单中验证规则
+				addRoleFormRules:{
+					roleName:[
+						{required:true,message:'请输入角色名称',trigger:'blur'}
+					]
+				},
 				//控制编辑角色对话框的显示与隐藏
 				editRoleDialogVisible:false,
 				//编辑角色的内容
 				editRoleForm:{},
+				//编辑角色表单中验证规则
+				editRoleFormRules:{
+					roleName:[
+						{required:true,message:'请输入角色名称',trigger:'blur'}
+					]
+				},
 				//当前编辑的角色 id
 				editId:''
 			}
@@ -225,14 +238,17 @@
 				this.addRoleDialogVisible = true;
 			},
 			//点击添加角色
-			async addRole(){
-				const {data:res} = await this.$axios.post('roles',this.addRoleForm);
-				if(res.meta.status !== 201){
-					return this.$message.error('添加角色失败!');
-				}
-				this.$message.success('添加角色成功!');
-				this.getRolesList();
-				this.addRoleDialogVisible = false;
+		    addRole(){
+				this.$refs.addRoleFormRef.validate(async valid => {
+					if(!valid) return
+					const {data:res} = await this.$axios.post('roles',this.addRoleForm);
+					if(res.meta.status !== 201){
+						return this.$message.error('添加角色失败!');
+					}
+					this.$message.success('添加角色成功!');
+					this.getRolesList();
+					this.addRoleDialogVisible = false;
+				})
 			},
 			//监听添加角色对话框
 			async showEditRole(id){
@@ -247,14 +263,18 @@
 				this.editRoleDialogVisible = true;
 			},
 			//点击添加角色
-			async editRole(){
-				const {data:res} = await this.$axios.put(`roles/${this.editId}`,this.editRoleForm);
-				if(res.meta.status !== 200){
-					return this.$message.error('编辑提交角色失败!');
-				 }
-				this.$message.success('编辑提交角色成功!');
-				this.getRolesList();
-				this.editRoleDialogVisible = false;
+			editRole(){
+				this.$refs.editRoleFormRef.validate(async valid => {
+					if(!valid) return
+					const {data:res} = await this.$axios.put(`roles/${this.editId}`,this.editRoleForm);
+					if(res.meta.status !== 200){
+						return this.$message.error('编辑提交角色失败!');
+					 }
+					this.$message.success('编辑提交角色成功!');
+					this.getRolesList();
+					this.editRoleDialogVisible = false;
+					
+				})
 			},
 			//删除对应 ID 的角色
 			async deleteRole(id){
@@ -272,6 +292,12 @@
 				}
 				this.$message.success('删除角色成功!');
 				this.getRolesList();
+			},
+			//关闭添加角色对话框时，表单数据的清空
+			addRoleClosed(){
+				this.$refs.addRoleFormRef.resetFields();
+				this.addRoleForm.roleName='';
+				this.addRoleForm.roleDesc='';	
 			}
 		}
 	}
