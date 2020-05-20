@@ -233,7 +233,7 @@
 			},
 			change(){
 				const oUl = document.querySelector('.el-cascader-menu__list');
-				oUl.style.height="300px";
+				oUl.style.height="300px"
 			},
 			//点击按钮，添加新的分类
 			addCate(){
