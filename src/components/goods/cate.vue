@@ -83,7 +83,6 @@
 					v-model="selectedKeys"
 				    @change="parentCateChange"
 					clearable 
-					@focus="change"
 					change-on-select
 					></el-cascader>
 			</el-form-item>
@@ -230,10 +229,6 @@
 					this.addCateForm.cat_pid = 0;
 					this.addCateForm.cat_level = 0;
 				}
-			},
-			change(){
-				const oUl = document.querySelector('.el-cascader-menu__list');
-				oUl.style.height="300px"
 			},
 			//点击按钮，添加新的分类
 			addCate(){

@@ -19,7 +19,7 @@
 					<!-- options用来指定数据源 -->
 					<!-- props用来指定配置对象 -->
 					<el-cascader expand-trigger="hover" :options="catelist" :props="cateProps" v-model="selectedKeys" @change="handleChange"
-					 @focus="change"></el-cascader>
+					 ></el-cascader>
 				</el-col>
 			</el-row>
 			<!-- tab 页签区域 -->
@@ -191,16 +191,6 @@
 				//证明选中的是三级分类
 				//根据所选分类的ID 和当前所处的面板，获取对应的参数
 				this.getParamsData();
-			},
-			change() {
-				this.$nextTick(_ => {
-					const aUl = document.querySelectorAll('.el-cascader-menu__list');
-					console.log(aUl.length)
-					aUl.forEach(item => {
-						item.style.height = "300px";
-						console.log(item.style.height)
-					});
-				})
 			},
 			//tab 页签点击事件的处理函数
 			handleTabClick() {
