@@ -1,10 +1,24 @@
 <template>
 	<div class="login_container">
 		<div class="login_box">
+			<h2>电商后台登陆界面</h2>
 			<!-- 头像区域 -->
-			<div class="avatar_box">
-				<img src="@/assets/logo.png" alt="图片加载失败!">
-			</div>
+			 <el-tooltip class="item" effect="dark" content="点击更改头像" placement="right-start">
+			      <div class="avatar_box" @click="change">
+			      	<el-upload
+			      	  class="avatar-uploader"
+			      	  action="http://127.0.0.1:8888/api/private/v1/upload"
+			      	  :show-file-list="false"
+			      	  :on-success="handleAvatarSuccess"
+			      	 >
+			      	  <img v-if="imageUrl" :src="imageUrl" class="avatar">
+			      	  <!-- <i v-else class="el-icon-plus avatar-uploader-icon"></i> -->
+			      	  <el-button v-else type="warning" icon="el-icon-circle-plus" circle class="addIcon"></el-button>
+			      	</el-upload>
+			      	<img src="@/assets/2.jpg" alt="图片加载失败!" v-if="!isIcon"> 
+			      </div>
+			    </el-tooltip>
+			
 			<!-- 登录表单区域 -->
 			<el-form label-width="0px" class="login_form" :model="loginForm" :rules="loginFormRules" ref="loginFormRef">
 				<!-- 用户名 -->
@@ -17,11 +31,18 @@
 				</el-form-item>
 				<!-- 按钮区域 -->
 				<el-form-item class="btns">
-					<el-button type="primary" @click="login">登录</el-button>
-				    <el-button type="info" @click="resetLoginForm">重置</el-button>
+					<el-button type="primary" @click="login" icon="el-icon-switch-button">登录</el-button>
+				    <el-button type="info" @click="resetLoginForm" icon="el-icon-setting">重置</el-button>
 				</el-form-item>
 			</el-form>
 		</div>
+		 <el-alert
+		    title="为了方便测试,账号和密码已自动填充 !"
+		    type="warning"
+		    center
+		    show-icon class="tishi"
+			:closable="false">
+		  </el-alert>
 	</div>
 </template>
 
@@ -29,6 +50,8 @@
 	export default {
 		data(){
 			return{
+				imageUrl: '',
+				isIcon:false,
 				//这是登录表单的数据绑定对象
 				loginForm:{
 				 username:'admin',
@@ -54,6 +77,12 @@
 			resetLoginForm(){
 			this.$refs.loginFormRef.resetFields();
 			},
+			handleAvatarSuccess(res, file) {
+			        this.imageUrl = URL.createObjectURL(file.raw);
+			},
+			change(){
+				this.isIcon = true;
+			},
 			login(){
 			this.$refs.loginFormRef.validate(async valid=>{
 				if(!valid) return;
@@ -75,39 +104,72 @@
 <style scoped="scoped" lang="less">
 	.login_container{
 		height:100%;
-		background:#2b4b6b;
+		background-image: url(../assets/3.png);
+	}
+    h2{
+		color:rgba(255,255,255,.8);
+		text-shadow: 5px 5px 5px #f60;
+		text-align: center;
+		width:100%;
+		height:70px;
+		line-height:70px;
+		background-color:rgba(255,0,0,.3);
+		border-radius: 20px 20px 0 0;
+		margin:0;
+		padding:0;
+	}
+	.tishi{
+		width:400px;
+		height:25px;
+		line-height:25px;
+		position:absolute;
+		bottom:120px;
+		left:550px;
+		background-color:rgba(0,0,0,0) !important;
 	}
 	.login_box{
-		width:450px;
-		height:300px;
-		background-color:#fff;
-		border-radius: 3px;
+		width:500px;
+		height:500px;
+		border-radius: 20px;
+		border:2px solid rgba(255,0,0,.4);
 		position:absolute;
 		left:50%;
 		top:50%;
 		transform:translate(-50%,-50%);
+		background-color:rgba(255,255,255,.5);
+		box-shadow: 0px 0px 1px 20px rgba(255, 255, 255, 0.2);
 		
 		.avatar_box{
-			height:130px;
-			width:130px;
+			height:90px;
+			width:90px;
 			border:1px solid #eee;
 			border-radius:50%;
 			padding:10px;
 			box-shadow: 0 0 10px #ddd;
 			position:absolute;
 			left:50%;
-			transform: translate(-50%,-50%);
-			background-color:#fff;
+			transform: translate(-50%,25%);
+			cursor: pointer;
+			background-color:rgba(255,0,0,.2);
+			position: relative;
+			
 			img{
-				width:100%;
-				height:100%;
+				width:90px;
+				height:90px;
 				border-radius:50%;
 				background-color:#eee;
+				position:absolute;
+				top:10px;
+				left:10px;
+			}
+			.addIcon,.avatar{
+				width:90px;
+				height:90px;
 			}
 		}
 		.login_form{
 			position:absolute;
-			bottom:0;
+			bottom:50px;
 			width:100%;
 			padding:0 20px;
 			box-sizing: border-box;

@@ -4,9 +4,9 @@
 		<el-header>
 			<div>
 				<img src="@/assets/heima.png" alt="图片加载失败!">
-				<span>电商后台管理系统</span>
+				<span class="title">电商后台管理系统</span>
 			</div>
-			<el-button @click="logout" type="info">退出</el-button>
+			<el-button @click="logout" type="info"icon="el-icon-switch-button">退出</el-button>
 		</el-header>
 		<!-- 页面主题区域 -->
 		<el-container class="zhuti">
@@ -96,7 +96,13 @@
 	.home-container {
 		height: 100%;
 	}
-
+    .title{
+	    font-size:24px;
+		color:white;
+		text-shadow: 0px 3px 5px red !important;
+		margin:0;
+		padding:0;
+	}
 	.el-header {
 		background-color: #373D41;
 		display: flex;
